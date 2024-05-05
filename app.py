@@ -1,4 +1,5 @@
 from flask import Flask
+from flask import jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -14,7 +15,27 @@ class GameState(db.Model):
 
 @app.route('/')
 def index():
-    return "Hello World!"
+    return jsonify({"HELLO": "WORLD"})
+
+
+@app.route('/start', methods=['POST'])
+def start_game():
+    return jsonify({"game_id": 1})
+
+
+@app.route('/move', methods=['POST'])
+def make_move():
+    return jsonify({"game_id": 1})
+
+
+@app.route('/status', methods=['GET'])
+def check_status():
+    return jsonify({"game_id": 1})
+
+
+@app.route('/board', methods=['GET'])
+def get_board():
+    return jsonify({"game_id": 1})
 
 if __name__ == '__main__':
     app.run(debug=True)
