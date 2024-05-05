@@ -12,10 +12,10 @@ function App() {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl w-full">
         <div className="md:col-span-2 bg-gray-200 p-4 shadow rounded">
-          <Board setBoardState={setBoardState} />
+          <Board boardState={boardState} setBoardState={setBoardState} gameId={gameId} />
         </div>
         <div className="space-y-4">
-          <StartButton setGameId={setGameId} />
+          <StartButton setGameId={setGameId} setBoardState={setBoardState} />
           <RestartButton gameId={gameId} setBoardState={setBoardState} />
           <EndGameButton gameId={gameId} />
         </div>

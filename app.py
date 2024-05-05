@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import jsonify
+from flask import request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
@@ -38,17 +39,43 @@ def restart_game(game_id):
         return jsonify({"error": "Game not found"}), 404
 
 
-@app.route('/move', methods=['POST'])
-def make_move():
-    return jsonify({"game_id": 1})
-
 @app.route('/status', methods=['GET'])
 def check_status():
     return jsonify({"game_id": 1})
 
-@app.route('/board', methods=['GET'])
-def get_board():
-    return jsonify({"game_id": 1})
+@app.route('/board/<int:game_id>', methods=['POST'])
+def update_board(game_id):
+    game = GameState.query.get(game_id)
+    if not game:
+        return jsonify({"error": "Game not found"}), 404
+
+    new_board = request.json.get('board')
+    game.board = new_board
+
+    # Check if there is a winner or the game is still ongoing
+    winner = check_winner(new_board)
+    if winner:
+        game.status = f"{winner} wins"
+    elif '-' not in new_board:
+        game.status = "draw"
+    else:
+        game.status = "ongoing"
+
+    db.session.commit()
+    return jsonify({"game_id": game.id, "board": game.board, "status": game.status})
+
+def check_winner(board):
+    lines = [
+        board[0:3], board[3:6], board[6:9],
+        board[0] + board[3] + board[6], board[1] + board[4] + board[7], board[2] + board[5] + board[8],
+        board[0] + board[4] + board[8], board[2] + board[4] + board[6]
+    ]
+    for line in lines:
+        if line == "XXX":
+            return "X"
+        elif line == "OOO":
+            return "O"
+    return None
 
 if __name__ == '__main__':
     with app.app_context():
