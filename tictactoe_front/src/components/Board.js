@@ -1,5 +1,5 @@
 import React from "react";
-export function Board() {
+export function Board({ setBoardState }) {
     const [squares, setSquares] = React.useState(Array(9).fill(null));
     const nextValue = React.useMemo(() => {
         const xCount = squares.filter(x => x === "X").length;
