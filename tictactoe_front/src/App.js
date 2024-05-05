@@ -7,16 +7,22 @@ import { EndGameButton } from './components/EndGameButton';
 
 function App() {
   const [gameId, setGameId] = React.useState(null);
+  const [gameStatus, setGameStatus] = React.useState("");
   const [boardState, setBoardState] = React.useState(null);
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl w-full">
         <div className="md:col-span-2 bg-gray-200 p-4 shadow rounded">
-          <Board boardState={boardState} setBoardState={setBoardState} gameId={gameId} />
+          <Board
+            boardState={boardState}
+            setBoardState={setBoardState}
+            gameId={gameId}
+            gameStatus={gameStatus}
+            setGameStatus={setGameStatus} />
         </div>
         <div className="space-y-4">
-          <StartButton setGameId={setGameId} setBoardState={setBoardState} />
-          <RestartButton gameId={gameId} setBoardState={setBoardState} />
+          <StartButton setGameId={setGameId} setBoardState={setBoardState} setGameStatus={setGameStatus} />
+          <RestartButton gameId={gameId} setBoardState={setBoardState} setGameStatus={setGameStatus} />
           <EndGameButton gameId={gameId} />
         </div>
       </div>

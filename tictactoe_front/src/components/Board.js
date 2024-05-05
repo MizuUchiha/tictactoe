@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-export function Board({ boardState, setBoardState, gameId }) {
+export function Board({ boardState, setBoardState, gameId, gameStatus, setGameStatus }) {
     const initialState = boardState ? boardState.split('').map(char => char === '-' ? null : char) : Array(9).fill(null);
     const [squares, setSquares] = useState(initialState);
-    const [gameStatus, setGameStatus] = useState("");
 
     const nextValue = React.useMemo(() => {
         const xCount = squares.filter(x => x === "X").length;
@@ -16,6 +15,7 @@ export function Board({ boardState, setBoardState, gameId }) {
         const newInitialState = boardState ? boardState.split('').map(char => char === '-' ? null : char) : Array(9).fill(null);
         setSquares(newInitialState);
     }, [boardState]);
+
 
     const handleClick = async (i) => {
         if (squares[i] === null && boardState !== null) {

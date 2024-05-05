@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-export function StartButton({ setGameId, setBoardState }) {
+export function StartButton({ setGameId, setBoardState, setGameStatus }) {
     const startGame = async () => {
         try {
             const response = await axios.post('/start');
@@ -9,6 +9,7 @@ export function StartButton({ setGameId, setBoardState }) {
             window.history.pushState({ game: response.data.game_id }, '', `?game=${response.data.game_id}`);
             setGameId(response.data.game_id);
             setBoardState(response.data.board);
+            setGameStatus("");
         } catch (error) {
             console.error('Error starting the game:', error);
         }
