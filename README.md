@@ -19,6 +19,8 @@ ___
 1. Clone repo
 2. Build and run app: `docker-compose up --build`
 3. App takes a while to build. Runs locally on `http://localhost:3000/`
+
+To start the game please click "Start Game" button otherwise board is disabled.
 # A bit about project
 1. `app.py` has endpoints for the game
 2. `board_test.py` is the test for `/board/<int:game_id>` endpoint
